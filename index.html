@@ -35,6 +35,8 @@
             word-wrap: break-word; font-family: 'Noto Sans TC', monospace;
             min-height: 200px; font-size: 0.95rem; line-height: 1.7;
         }
+        .form-control:focus { border-color: var(--brand-teal); box-shadow: 0 0 0 3px rgba(13,148,136,0.15); }
+        input.prompt-input { background: #fff; }
         .copy-btn { position: absolute; top: 12px; right: 12px; }
         .template-count { font-size: 0.78rem; color: var(--brand-navy); opacity: 0.5; margin-left: 4px; }
         .filter-btn { border-radius: 20px; padding: 6px 16px; font-size: 0.9rem; border: 1.5px solid rgba(13,148,136,0.3); color: var(--brand-teal-dark); background: white; transition: all 0.2s; }
@@ -125,7 +127,7 @@
         <div class="row justify-content-center">
             <div class="col-lg-10">
                 <div class="info-card">
-                    <strong>💡 怎麼用：</strong>① 選一個產製階段和模板 → ② 參考或修改下面已經填好的客家範例 → ③ 按「複製」→ ④ 貼到 Gemini 就出稿。三個欄位（角色／情境／期望）填得越具體，AI 給的東西越好用。
+                    <strong>💡 怎麼用：</strong>① 選一個產製階段和模板 → ② 把空格一格一格填上你自己的節目資訊（👤角色、🎯期望已幫你寫好，可不動）→ ③ 按「複製」→ ④ 貼到 Gemini 就出稿。填得越具體，AI 給的越好用。
                 </div>
 
                 <!-- AI 工具連結（主軸：Gemini） -->
@@ -248,25 +250,60 @@
 
     <!-- ===================== 模板資料 ===================== -->
 
-    <!-- 策劃篇 -->
     <script type="text/template-data">
 {
     "name": "1. 客家故事選題雷達（三角選題法）",
     "category": "策劃篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是一位熟悉客家文化與台灣 Podcast 生態的內容策劃顧問，做過多檔在地文化節目的選題企劃，擅長用「痛點 × 好奇心 × 文化認同」三角法，替創作者找出最有共鳴、又有記憶點的主題。你了解客家族群的世代差異（長輩、客家二代、對客家有興趣的非客家族群）。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 我的節目主題：【填，例：客家飲食／客庄職人／客語復興】\n👥 目標受眾：【填，例：30–45 歲在都市工作的客家二代】\n💡 特別想談的方向：【填，例：飲食記憶、長輩故事、返鄉創業】\n🎨 節目調性：【填，例：溫暖有故事感、不說教】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請用「痛點 × 好奇心 × 文化認同」三角選題法，列出 10 個最有共鳴的單集選題。用表格呈現，每個選題包含：①選題標題 ②切入角度 ③為什麼這群受眾會想聽（對應哪個痛點／好奇心／認同）④建議的開場故事或人物。最後從中挑出 3 個最適合當「開台前三集」的題目並說明理由。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是一位熟悉客家文化與台灣 Podcast 生態的內容策劃顧問，做過多檔在地文化節目的選題企劃，擅長用「痛點 × 好奇心 × 文化認同」三角法，替創作者找出最有共鳴、又有記憶點的主題。你了解客家族群的世代差異（長輩、客家二代、對客家有興趣的非客家族群）。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 我的節目主題",
+            "placeholder": "例：客家飲食／客庄職人／客語復興"
+        },
+        {
+            "type": "input",
+            "id": "audience",
+            "label": "👥 目標受眾",
+            "placeholder": "例：30–45 歲在都市工作的客家二代"
+        },
+        {
+            "type": "input",
+            "id": "focus",
+            "label": "💡 特別想談的方向",
+            "placeholder": "例：飲食記憶、長輩故事、返鄉創業"
+        },
+        {
+            "type": "input",
+            "id": "tone",
+            "label": "🎨 節目調性",
+            "placeholder": "例：溫暖有故事感、不說教"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請用「痛點 × 好奇心 × 文化認同」三角選題法，列出 10 個最有共鳴的單集選題。用表格呈現，每個選題包含：①選題標題 ②切入角度 ③為什麼這群受眾會想聽（對應哪個痛點／好奇心／認同）④建議的開場故事或人物。最後從中挑出 3 個最適合當「開台前三集」的題目並說明理由。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【我的節目】
+- 節目主題：<<<{topic}>>>
+- 目標受眾：<<<{audience}>>>
+- 特別想談：<<<{focus}>>>
+- 節目調性：<<<{tone}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -277,19 +314,55 @@
     "name": "2. 聽眾輪廓 Persona 建立",
     "category": "策劃篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 受眾研究專家，擅長把模糊的「目標聽眾」具體化成一個有血有肉的人物輪廓，幫創作者在寫腳本時心裡有一個明確的對象可以對話。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 我的節目主題：【填，例：客家文化與在地故事】\n🎧 聽眾通常在什麼情境聽：【填，例：通勤、做家事時想聽點有溫度的故事】\n👥 我猜他們大概是：【填，例：30–45 歲、住雙北或桃竹苗、離鄉客家子弟或對客家好奇的外地人】\n❓ 我最想搞懂他們的：【填，例：為什麼會打開我的節目、最受不了哪種內容】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請幫我建立一個典型聽眾的 Persona，用表格呈現，欄位包含：年齡、職業與生活型態、收聽情境（什麼時候、用什麼裝置聽）、收聽動機、最在意的內容類型、最不想聽到的內容（地雷）。最後附上一段 100 字以內、以這位聽眾第一人稱寫的「心聲」，讓我感受到他真實的樣子。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 受眾研究專家，擅長把模糊的「目標聽眾」具體化成一個有血有肉的人物輪廓，幫創作者在寫腳本時心裡有一個明確的對象可以對話。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 我的節目主題",
+            "placeholder": "例：客家文化與在地故事"
+        },
+        {
+            "type": "input",
+            "id": "scene",
+            "label": "🎧 聽眾通常在什麼情境聽",
+            "placeholder": "例：通勤、做家事時想聽點有溫度的故事"
+        },
+        {
+            "type": "input",
+            "id": "guess",
+            "label": "👥 我猜他們大概是",
+            "placeholder": "例：30–45 歲、住雙北或桃竹苗、離鄉客家子弟或對客家好奇的外地人"
+        },
+        {
+            "type": "input",
+            "id": "want",
+            "label": "❓ 我最想搞懂他們的",
+            "placeholder": "例：為什麼會打開我的節目、最受不了哪種內容"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請幫我建立一個典型聽眾的 Persona，用表格呈現，欄位包含：年齡、職業與生活型態、收聽情境（什麼時候、用什麼裝置聽）、收聽動機、最在意的內容類型、最不想聽到的內容（地雷）。最後附上一段 100 字以內、以這位聽眾第一人稱寫的「心聲」，讓我感受到他真實的樣子。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【我的節目】
+- 節目主題：<<<{topic}>>>
+- 聽眾收聽情境：<<<{scene}>>>
+- 我猜的聽眾輪廓：<<<{guess}>>>
+- 我最想搞懂的：<<<{want}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -300,19 +373,55 @@
     "name": "3. 節目差異化定位分析",
     "category": "策劃篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是台灣 Podcast 市場分析師，熟悉文化類、地方創生類節目的競爭態勢，擅長用定位矩陣幫創作者找出市場空白點與差異化機會。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 我想做的節目類型：【填，例：客家文化 Podcast】\n📊 我觀察到同類節目大致是：【填，例：一種偏知識資訊有點硬、一種偏閒聊但沒深度】\n🎯 我想切的位置：【填，例：情感夠深、又有資訊含量】\n💪 我的優勢／獨家資源：【填，例：會說客語、家裡是務農夥房、認識很多客庄長輩、拿得到第一手故事】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請分析目前台灣客家／在地文化類 Podcast 的內容方向，用「情感深度 × 資訊密度」四象限矩陣標出常見節目落在哪裡、找出尚未被滿足的空白點。接著根據我的優勢，建議一個差異化的節目定位、一句話節目標語（slogan），以及 3 個能強化這個定位的固定單元設計。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是台灣 Podcast 市場分析師，熟悉文化類、地方創生類節目的競爭態勢，擅長用定位矩陣幫創作者找出市場空白點與差異化機會。"
+        },
+        {
+            "type": "input",
+            "id": "ptype",
+            "label": "🎙️ 我想做的節目類型",
+            "placeholder": "例：客家文化 Podcast"
+        },
+        {
+            "type": "input",
+            "id": "market",
+            "label": "📊 我觀察到同類節目大致是",
+            "placeholder": "例：一種偏知識資訊有點硬、一種偏閒聊但沒深度"
+        },
+        {
+            "type": "input",
+            "id": "position",
+            "label": "🎯 我想切的位置",
+            "placeholder": "例：情感夠深、又有資訊含量"
+        },
+        {
+            "type": "input",
+            "id": "edge",
+            "label": "💪 我的優勢／獨家資源",
+            "placeholder": "例：會說客語、家裡是務農夥房、認識很多客庄長輩、拿得到第一手故事"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請分析目前台灣客家／在地文化類 Podcast 的內容方向，用「情感深度 × 資訊密度」四象限矩陣標出常見節目落在哪裡、找出尚未被滿足的空白點。接著根據我的優勢，建議一個差異化的節目定位、一句話節目標語（slogan），以及 3 個能強化這個定位的固定單元設計。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【我的節目】
+- 節目類型：<<<{ptype}>>>
+- 我觀察到的同類節目：<<<{market}>>>
+- 我想切的位置：<<<{position}>>>
+- 我的優勢：<<<{edge}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -323,43 +432,114 @@
     "name": "4. 單集企劃書（錄音前一頁式）",
     "category": "策劃篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是資深 Podcast 製作人，擅長在錄音前把一集節目的骨架想清楚，避免錄到一半發現沒重點、收不了尾。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集主題：【填，例：桂竹筍產季，與美濃阿婆挖筍的一天】\n⏱️ 單集長度：【填，例：20–30 分鐘】\n🎤 形式：【填，例：我自己講述 ＋ 穿插阿婆的訪談片段】\n🎯 想給聽眾的：【填，例：認識桂竹筍背後的人與土地】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請幫我寫一份一頁式單集企劃書，包含：①單集標題（暫定）②一句話主旨 ③目標聽眾與這集要給他們的價值 ④內容大綱（開場鉤子 → 3 個段落重點 → 結尾）⑤需要準備的素材或訪談問題 ⑥這集的 CTA（希望聽眾聽完做什麼）。格式條列、清楚好執行。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是資深 Podcast 製作人，擅長在錄音前把一集節目的骨架想清楚，避免錄到一半發現沒重點、收不了尾。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 這集主題",
+            "placeholder": "例：桂竹筍產季，與美濃阿婆挖筍的一天"
+        },
+        {
+            "type": "input",
+            "id": "length",
+            "label": "⏱️ 單集長度",
+            "placeholder": "例：20–30 分鐘"
+        },
+        {
+            "type": "input",
+            "id": "format",
+            "label": "🎤 形式",
+            "placeholder": "例：我自己講述 ＋ 穿插阿婆的訪談片段"
+        },
+        {
+            "type": "input",
+            "id": "give",
+            "label": "🎯 想給聽眾的",
+            "placeholder": "例：認識桂竹筍背後的人與土地"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請幫我寫一份一頁式單集企劃書，包含：①單集標題（暫定）②一句話主旨 ③目標聽眾與這集要給他們的價值 ④內容大綱（開場鉤子 → 3 個段落重點 → 結尾）⑤需要準備的素材或訪談問題 ⑥這集的 CTA（希望聽眾聽完做什麼）。格式條列、清楚好執行。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 主題：<<<{topic}>>>
+- 單集長度：<<<{length}>>>
+- 形式：<<<{format}>>>
+- 想給聽眾的：<<<{give}>>>
 
 【期望】
 <<<{expectation}>>>
     </script>
 
-    <!-- 腳本篇 -->
     <script type="text/template-data">
 {
     "name": "5. 三段式獨白腳本（Hook→Body→CTA）",
     "category": "腳本篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是擅長寫「有畫面感口語腳本」的 Podcast 編劇，知道聲音節目和文字文章不同：句子要短、要像在跟朋友講話、要讓人腦中有畫面。你熟悉客家文化背景與用語。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集主題：【填，例：義民祭對一個客家小孩的意義——從怕到懂】\n⏱️ 腳本長度：【填，例：約 10 分鐘／1500 字】\n👥 聽眾：【填，例：30–45 歲的客家二代】\n🎨 想要的語氣：【填，例：親切、有溫度、有畫面感，可穿插一兩句客語】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請用三段式結構交付：①開場鉤子 Hook（30 秒內，用一個具體畫面或問題勾住人）②故事主體 Body（鋪陳故事、帶出客家文化核心，情感要有起伏）③收束呼籲 CTA（呼應開場、留一句餘韻，並自然引導訂閱或分享）。請直接給可以對著麥克風唸的口語腳本，段落之間標好 [停頓] 或 [語氣放慢] 等提示。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是擅長寫「有畫面感口語腳本」的 Podcast 編劇，知道聲音節目和文字文章不同：句子要短、要像在跟朋友講話、要讓人腦中有畫面。你熟悉客家文化背景與用語。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 這集主題",
+            "placeholder": "例：義民祭對一個客家小孩的意義——從怕到懂"
+        },
+        {
+            "type": "input",
+            "id": "length",
+            "label": "⏱️ 腳本長度",
+            "placeholder": "例：約 10 分鐘／1500 字"
+        },
+        {
+            "type": "input",
+            "id": "audience",
+            "label": "👥 聽眾",
+            "placeholder": "例：30–45 歲的客家二代"
+        },
+        {
+            "type": "input",
+            "id": "tone",
+            "label": "🎨 想要的語氣",
+            "placeholder": "例：親切、有溫度、有畫面感，可穿插一兩句客語"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請用三段式結構交付：①開場鉤子 Hook（30 秒內，用一個具體畫面或問題勾住人）②故事主體 Body（鋪陳故事、帶出客家文化核心，情感要有起伏）③收束呼籲 CTA（呼應開場、留一句餘韻，並自然引導訂閱或分享）。請直接給可以對著麥克風唸的口語腳本，段落之間標好 [停頓] 或 [語氣放慢] 等提示。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 主題：<<<{topic}>>>
+- 腳本長度：<<<{length}>>>
+- 聽眾：<<<{audience}>>>
+- 語氣：<<<{tone}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -370,19 +550,55 @@
     "name": "6. 來賓訪談腳本（對話公式）",
     "category": "腳本篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 訪談腳本設計師，擅長設計「主持人問題拋出 → 來賓故事展開 → 主持人觀點收束」的對話流，讓訪談自然、有情感起伏，又不失重點。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎤 來賓是誰：【填，例：60 歲、種桂竹 30 年的美濃客家農夫】\n🎙️ 訪談主題：【填，例：守著竹林一輩子的甘苦，怎麼看年輕人不願返鄉】\n⏱️ 長度：【填，例：約 8–10 分鐘】\n💛 想要的氛圍：【填，例：像兩人真誠聊天，結尾讓來賓說一句被記住的話】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請以「主持人 × 來賓」對話形式，寫一段約 8–10 分鐘的訪談腳本。結構為：①暖場（拉近距離、不要一開始就太重）②核心故事（用 3–4 個問題層層帶出來賓的經歷與情感）③收束（主持人歸納 + 邀請來賓講一句金句）。請標明主持人、來賓，並在關鍵處加上 [來賓可能停頓／哽咽] 之類的情緒提示。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 訪談腳本設計師，擅長設計「主持人問題拋出 → 來賓故事展開 → 主持人觀點收束」的對話流，讓訪談自然、有情感起伏，又不失重點。"
+        },
+        {
+            "type": "input",
+            "id": "guest",
+            "label": "🎤 來賓是誰",
+            "placeholder": "例：60 歲、種桂竹 30 年的美濃客家農夫"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 訪談主題",
+            "placeholder": "例：守著竹林一輩子的甘苦，怎麼看年輕人不願返鄉"
+        },
+        {
+            "type": "input",
+            "id": "length",
+            "label": "⏱️ 長度",
+            "placeholder": "例：約 8–10 分鐘"
+        },
+        {
+            "type": "input",
+            "id": "mood",
+            "label": "💛 想要的氛圍",
+            "placeholder": "例：像兩人真誠聊天，結尾讓來賓說一句被記住的話"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請以「主持人 × 來賓」對話形式，寫一段約 8–10 分鐘的訪談腳本。結構為：①暖場（拉近距離、不要一開始就太重）②核心故事（用 3–4 個問題層層帶出來賓的經歷與情感）③收束（主持人歸納 + 邀請來賓講一句金句）。請標明主持人、來賓，並在關鍵處加上 [來賓可能停頓／哽咽] 之類的情緒提示。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這場訪談】
+- 來賓：<<<{guest}>>>
+- 訪談主題：<<<{topic}>>>
+- 長度：<<<{length}>>>
+- 想要的氛圍：<<<{mood}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -393,19 +609,50 @@
     "name": "7. CARE 人味優化（去 AI 味）",
     "category": "腳本篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是文字潤稿師，專門把「太像 AI 寫的、太工整、沒人味」的口語腳本，改成像真人在說話、有在地溫度的版本。你熟悉客家文化元素（語言、飲食、習俗）。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"✏️ 我的節目調性：【填，例：客家文化 Podcast 的溫暖口吻】\n😕 我覺得這段稿的問題：【填，例：太書面、太工整、像 AI 寫的、少了在地味】\n📄 原始腳本（貼在下面）：\n【把你的腳本貼在這裡】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請用 CARE 修改法幫我優化，並說明你改了什麼：①Context 情境——加入更多在地生活細節與感官描述（畫面、味道、聲音）②Authenticity 真實感——自然融入客家文化元素（客語詞彙、飲食、習俗、地名）③Rhythm 節奏——讓句子長短交錯，有口語的呼吸感 ④Emotion 情緒——加入情感起伏，不要平鋪直敘。請給出修改後的完整腳本，並在最後用條列說明主要改動。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是文字潤稿師，專門把「太像 AI 寫的、太工整、沒人味」的口語腳本，改成像真人在說話、有在地溫度的版本。你熟悉客家文化元素（語言、飲食、習俗）。"
+        },
+        {
+            "type": "input",
+            "id": "tone",
+            "label": "✏️ 我的節目調性",
+            "placeholder": "例：客家文化 Podcast 的溫暖口吻"
+        },
+        {
+            "type": "input",
+            "id": "problem",
+            "label": "😕 我覺得這段稿的問題",
+            "placeholder": "例：太書面、太工整、像 AI 寫的、少了在地味"
+        },
+        {
+            "type": "textarea",
+            "id": "script",
+            "label": "📄 原始腳本（貼在這裡）",
+            "placeholder": "把你要優化的腳本整段貼進來…"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請用 CARE 修改法幫我優化，並說明你改了什麼：①Context 情境——加入更多在地生活細節與感官描述（畫面、味道、聲音）②Authenticity 真實感——自然融入客家文化元素（客語詞彙、飲食、習俗、地名）③Rhythm 節奏——讓句子長短交錯，有口語的呼吸感 ④Emotion 情緒——加入情感起伏。請給出修改後的完整腳本，並在最後用條列說明主要改動。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【我的需求】
+- 節目調性：<<<{tone}>>>
+- 這段稿的問題：<<<{problem}>>>
+
+【原始腳本】
+<<<{script}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -416,43 +663,100 @@
     "name": "8. 開場 30 秒鉤子（黃金開頭）",
     "category": "腳本篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 開場設計專家，深知「前 30 秒決定聽眾要不要繼續聽」，擅長用畫面、懸念、提問、衝突感，快速抓住注意力。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集主題：【填，例：客語正在消失——當阿婆發現孫子聽不懂她的話】\n🚫 我不想要的開場：【填，例：「大家好、歡迎收聽」那種平淡開法】\n🎯 我想要的效果：【填，例：30 秒內就讓聽眾想知道後面】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請給我 5 種不同風格的 30 秒開場白（每種約 60–80 字、可直接唸）：①畫面型（用一個具體場景開場）②提問型（拋一個讓人想回答的問題）③衝突型（用一個對比或矛盾製造張力）④懸念型（先說結果一半、吊胃口）⑤金句型（用一句有重量的話定調）。每種標明適合什麼樣的單集，並推薦你覺得最適合這個主題的一種。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 開場設計專家，深知「前 30 秒決定聽眾要不要繼續聽」，擅長用畫面、懸念、提問、衝突感，快速抓住注意力。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 這集主題",
+            "placeholder": "例：客語正在消失——當阿婆發現孫子聽不懂她的話"
+        },
+        {
+            "type": "input",
+            "id": "avoid",
+            "label": "🚫 我不想要的開場",
+            "placeholder": "例：「大家好、歡迎收聽」那種平淡開法"
+        },
+        {
+            "type": "input",
+            "id": "goal",
+            "label": "🎯 我想要的效果",
+            "placeholder": "例：30 秒內就讓聽眾想知道後面"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請給我 5 種不同風格的 30 秒開場白（每種約 60–80 字、可直接唸）：①畫面型（用一個具體場景開場）②提問型（拋一個讓人想回答的問題）③衝突型（用一個對比或矛盾製造張力）④懸念型（先說結果一半、吊胃口）⑤金句型（用一句有重量的話定調）。每種標明適合什麼樣的單集，並推薦你覺得最適合這個主題的一種。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 主題：<<<{topic}>>>
+- 不想要的開場：<<<{avoid}>>>
+- 想要的效果：<<<{goal}>>>
 
 【期望】
 <<<{expectation}>>>
     </script>
 
-    <!-- 包裝篇 -->
     <script type="text/template-data">
 {
     "name": "9. 標題六連發（三公式）",
     "category": "包裝篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 標題文案高手，懂得用「數字型、懸念型、情感型」三種公式，寫出讓人在一堆節目裡會想點開的單集標題。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集內容：【填，例：返鄉接手柿餅工廠的客家青年，從抗拒到驕傲】\n📱 上架平台：【填，例：Apple Podcast、Spotify、KKBOX】\n🎨 想要的風格：【填，例：貼近客家在地感、又有點現代吸引力，20 字內】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請為這集生成 6 個標題，分別用：數字型 ×2、懸念型 ×2、情感型 ×2。每個標題後面用一句話說明它的「吸引力來源」。最後幫我推薦你認為點擊率會最高的 1 個，並說明理由。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 標題文案高手，懂得用「數字型、懸念型、情感型」三種公式，寫出讓人在一堆節目裡會想點開的單集標題。"
+        },
+        {
+            "type": "input",
+            "id": "content",
+            "label": "🎙️ 這集內容",
+            "placeholder": "例：返鄉接手柿餅工廠的客家青年，從抗拒到驕傲"
+        },
+        {
+            "type": "input",
+            "id": "platform",
+            "label": "📱 上架平台",
+            "placeholder": "例：Apple Podcast、Spotify、KKBOX"
+        },
+        {
+            "type": "input",
+            "id": "style",
+            "label": "🎨 想要的風格",
+            "placeholder": "例：貼近客家在地感、又有點現代吸引力，20 字內"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請為這集生成 6 個標題，分別用：數字型 ×2、懸念型 ×2、情感型 ×2。每個標題後面用一句話說明它的「吸引力來源」。最後幫我推薦你認為點擊率會最高的 1 個，並說明理由。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 內容：<<<{content}>>>
+- 上架平台：<<<{platform}>>>
+- 想要的風格：<<<{style}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -463,19 +767,48 @@
     "name": "10. 集數描述 + SEO（show notes）",
     "category": "包裝篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 內容行銷專員，擅長寫「既能吸引人點開、又能被搜尋到」的集數描述（show notes）。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集主題：【填，例：擂茶不只是飲料——一碗擂茶裡的客家待客之道】\n🔑 想帶入的關鍵字：【填，例：客家文化、擂茶、在地飲食】\n🎯 結尾想引導：【填，例：訂閱或分享】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請用三段式結構交付：①HOOK 鉤子開場（第一句就抓住眼球）②Preview 內容預告（告訴聽眾這集能獲得什麼）③CTA 行動呼籲（引導訂閱或分享）。關鍵字要自然融入、不要硬塞。最後另外列出 5 個適合這集的 hashtag 標籤。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 內容行銷專員，擅長寫「既能吸引人點開、又能被搜尋到」的集數描述（show notes）。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 這集主題",
+            "placeholder": "例：擂茶不只是飲料——一碗擂茶裡的客家待客之道"
+        },
+        {
+            "type": "input",
+            "id": "keywords",
+            "label": "🔑 想帶入的關鍵字",
+            "placeholder": "例：客家文化、擂茶、在地飲食"
+        },
+        {
+            "type": "input",
+            "id": "cta",
+            "label": "🎯 結尾想引導",
+            "placeholder": "例：訂閱或分享"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請用三段式結構交付：①HOOK 鉤子開場（第一句就抓住眼球）②Preview 內容預告（告訴聽眾這集能獲得什麼）③CTA 行動呼籲（引導訂閱或分享）。關鍵字要自然融入、不要硬塞。最後另外列出 5 個適合這集的 hashtag 標籤。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 主題：<<<{topic}>>>
+- 想帶入的關鍵字：<<<{keywords}>>>
+- 結尾引導：<<<{cta}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -486,19 +819,48 @@
     "name": "11. 社群宣傳貼文（IG／FB／Threads）",
     "category": "包裝篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是社群小編，擅長把一集 Podcast 改寫成讓人想點來聽的社群貼文，語氣口語、有勾子、適合手機滑動閱讀。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集主題：【填，例：義民祭對一個客家小孩的意義】\n📱 要發的平台：【填，例：Instagram、Facebook、Threads】\n🎨 我的粉專調性：【填，例：溫暖、有人情味】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請幫我寫 3 種版本：①Instagram 版（短、有畫面、結尾一句鉤子 + 引導看簡介連結，附 5 個 hashtag）②Facebook 版（可稍長、用一個小故事開場、引導留言互動）③Threads 版（口語、像跟朋友聊天、留一個能引起討論的問題）。每則都自然帶出「想知道更多就點來聽」的感覺，不要太像廣告。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是社群小編，擅長把一集 Podcast 改寫成讓人想點來聽的社群貼文，語氣口語、有勾子、適合手機滑動閱讀。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 這集主題",
+            "placeholder": "例：義民祭對一個客家小孩的意義"
+        },
+        {
+            "type": "input",
+            "id": "platform",
+            "label": "📱 要發的平台",
+            "placeholder": "例：Instagram、Facebook、Threads"
+        },
+        {
+            "type": "input",
+            "id": "tone",
+            "label": "🎨 我的粉專調性",
+            "placeholder": "例：溫暖、有人情味"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請幫我寫 3 種版本：①Instagram 版（短、有畫面、結尾一句鉤子 + 引導看簡介連結，附 5 個 hashtag）②Facebook 版（可稍長、用一個小故事開場、引導留言互動）③Threads 版（口語、像跟朋友聊天、留一個能引起討論的問題）。每則都自然帶出「想知道更多就點來聽」的感覺，不要太像廣告。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 主題：<<<{topic}>>>
+- 要發的平台：<<<{platform}>>>
+- 粉專調性：<<<{tone}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -509,43 +871,107 @@
     "name": "12. 封面／配圖視覺提示詞",
     "category": "包裝篇",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是視覺設計指導，擅長把一集 Podcast 的主題轉成可以丟給 AI 繪圖工具（如 Gemini、Imagen）的圖像生成提示詞。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 這集主題：【填，例：桂竹筍產季——美濃阿婆挖筍的一天】\n🎨 想要的畫面感：【填，例：溫暖、有在地感、有故事性】\n🌅 色調氛圍：【填，例：大地色、晨光感】\n📐 用途：【填，例：Podcast 正方形封面，也適合 IG】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請給我 3 組可直接使用的圖像生成提示詞（中英對照），每組包含：主體畫面、構圖、光線氛圍、色調、風格（例如紀實攝影感／溫暖插畫感）。請避免任何文字出現在圖中。最後提醒我用 AI 生成圖時要注意的 1–2 個重點（如避免真實人物肖像、文化符號要考究）。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是視覺設計指導，擅長把一集 Podcast 的主題轉成可以丟給 AI 繪圖工具（如 Gemini、Imagen）的圖像生成提示詞。"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 這集主題",
+            "placeholder": "例：桂竹筍產季——美濃阿婆挖筍的一天"
+        },
+        {
+            "type": "input",
+            "id": "feel",
+            "label": "🎨 想要的畫面感",
+            "placeholder": "例：溫暖、有在地感、有故事性"
+        },
+        {
+            "type": "input",
+            "id": "color",
+            "label": "🌅 色調氛圍",
+            "placeholder": "例：大地色、晨光感"
+        },
+        {
+            "type": "input",
+            "id": "usage",
+            "label": "📐 用途",
+            "placeholder": "例：Podcast 正方形封面，也適合 IG"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請給我 3 組可直接使用的圖像生成提示詞（中英對照），每組包含：主體畫面、構圖、光線氛圍、色調、風格（例如紀實攝影感／溫暖插畫感）。請避免任何文字出現在圖中。最後提醒我用 AI 生成圖時要注意的 1–2 個重點（如避免真實人物肖像、文化符號要考究）。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這一集】
+- 主題：<<<{topic}>>>
+- 想要的畫面感：<<<{feel}>>>
+- 色調氛圍：<<<{color}>>>
+- 用途：<<<{usage}>>>
 
 【期望】
 <<<{expectation}>>>
     </script>
 
-    <!-- 經營推廣 -->
     <script type="text/template-data">
 {
     "name": "13. 系列節目企劃（跨集規劃）",
     "category": "經營推廣",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 節目總監，擅長把單集思維升級成「一季／一個系列」的規劃，讓節目有主軸、能養成聽眾的收聽習慣。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 系列主軸：【填，例：客家飲食／客庄裡的職人】\n📅 規劃集數：【填，例：一季 6–8 集】\n🎒 我手上的素材／人脈：【填，例：桂竹筍農、柿餅工廠、擂茶老店、藍染工作室、客家八音老師傅】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請幫我企劃一個 6–8 集的系列節目，包含：①系列主題與一句話定位 ②每一集的暫定標題與主角／主題 ③整季的情感曲線（哪集輕鬆、哪集深刻、哪集收尾）④跨集的固定單元或彩蛋設計 ⑤建議的上架節奏（多久一集）。用表格呈現整季規劃。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 節目總監，擅長把單集思維升級成「一季／一個系列」的規劃，讓節目有主軸、能養成聽眾的收聽習慣。"
+        },
+        {
+            "type": "input",
+            "id": "theme",
+            "label": "🎙️ 系列主軸",
+            "placeholder": "例：客家飲食／客庄裡的職人"
+        },
+        {
+            "type": "input",
+            "id": "episodes",
+            "label": "📅 規劃集數",
+            "placeholder": "例：一季 6–8 集"
+        },
+        {
+            "type": "input",
+            "id": "resource",
+            "label": "🎒 我手上的素材／人脈",
+            "placeholder": "例：桂竹筍農、柿餅工廠、擂茶老店、藍染工作室、客家八音老師傅"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請幫我企劃一個 6–8 集的系列節目，包含：①系列主題與一句話定位 ②每一集的暫定標題與主角／主題 ③整季的情感曲線（哪集輕鬆、哪集深刻、哪集收尾）④跨集的固定單元或彩蛋設計 ⑤建議的上架節奏（多久一集）。用表格呈現整季規劃。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【我的系列】
+- 系列主軸：<<<{theme}>>>
+- 規劃集數：<<<{episodes}>>>
+- 手上的素材／人脈：<<<{resource}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -556,19 +982,55 @@
     "name": "14. 來賓邀約訊息（LINE）",
     "category": "經營推廣",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是 Podcast 製作助理，擅長寫真誠、不失禮、又能讓對方願意答應的來賓邀約訊息。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎤 我想邀的對象：【填，例：種桂竹 30 年的美濃客家農夫長輩】\n📱 對方的狀況：【填，例：不熟悉 Podcast、可能會緊張、用 LINE 聯絡】\n🎙️ 想邀他聊：【填，例：守著竹林一輩子的故事】\n💛 想要的口吻：【填，例：尊重、親切、讓長輩安心】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請幫我寫一則 LINE 邀約訊息（口語、溫暖、好懂，避免「Podcast」這種讓長輩陌生的詞，可以說「做一個用聲音記錄故事的節目」）。內容包含：①我是誰、怎麼認識他的 ②想邀請他聊什麼、為什麼是他 ③會怎麼進行（多久、在哪、輕鬆聊就好）④降低壓力（不用準備、講錯沒關係）。另外附一則「對方若猶豫」時可以補的訊息。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是 Podcast 製作助理，擅長寫真誠、不失禮、又能讓對方願意答應的來賓邀約訊息。"
+        },
+        {
+            "type": "input",
+            "id": "guest",
+            "label": "🎤 我想邀的對象",
+            "placeholder": "例：種桂竹 30 年的美濃客家農夫長輩"
+        },
+        {
+            "type": "input",
+            "id": "situation",
+            "label": "📱 對方的狀況",
+            "placeholder": "例：不熟悉 Podcast、可能會緊張、用 LINE 聯絡"
+        },
+        {
+            "type": "input",
+            "id": "topic",
+            "label": "🎙️ 想邀他聊",
+            "placeholder": "例：守著竹林一輩子的故事"
+        },
+        {
+            "type": "input",
+            "id": "tone",
+            "label": "💛 想要的口吻",
+            "placeholder": "例：尊重、親切、讓長輩安心"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請幫我寫一則 LINE 邀約訊息（口語、溫暖、好懂，避免「Podcast」這種讓長輩陌生的詞，可以說「做一個用聲音記錄故事的節目」）。內容包含：①我是誰、怎麼認識他的 ②想邀請他聊什麼、為什麼是他 ③會怎麼進行（多久、在哪、輕鬆聊就好）④降低壓力（不用準備、講錯沒關係）。另外附一則「對方若猶豫」時可以補的訊息。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【這次邀約】
+- 想邀的對象：<<<{guest}>>>
+- 對方的狀況：<<<{situation}>>>
+- 想邀他聊：<<<{topic}>>>
+- 想要的口吻：<<<{tone}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -579,19 +1041,48 @@
     "name": "15. 聽眾互動 / 回饋問卷",
     "category": "經營推廣",
     "structure": [
-        {"type":"textarea","id":"role","label":"👤 角色設定","placeholder":"你是社群經營者，擅長設計能讓聽眾願意回應、又能幫節目蒐集到有用回饋的互動問題與問卷。"},
-        {"type":"textarea","id":"context","label":"📋 情境描述","placeholder":"🎙️ 我的節目：【填，例：客家文化 Podcast，已上架幾集】\n🎯 我想了解聽眾的：【填，例：喜歡什麼、收聽習慣、想聽的未來主題】\n📱 我會在哪拋互動：【填，例：IG 限動、節目結尾、社群貼文】"},
-        {"type":"textarea","id":"expectation","label":"🎯 期望產出","placeholder":"請幫我設計兩種東西：①5 個適合放在 IG 限動或節目結尾的「輕互動問題」（聽眾一句話就能回、能引導他們分享自己的客家記憶）②一份 5–7 題的聽眾回饋問卷（含題目與選項建議），用來了解收聽習慣、最喜歡的單集類型、希望未來聽到的主題。口吻親切，不要像市調。"}
+        {
+            "type": "textarea",
+            "id": "role",
+            "label": "👤 角色設定（AI 人設，可不動）",
+            "value": "你是社群經營者，擅長設計能讓聽眾願意回應、又能幫節目蒐集到有用回饋的互動問題與問卷。"
+        },
+        {
+            "type": "input",
+            "id": "show",
+            "label": "🎙️ 我的節目",
+            "placeholder": "例：客家文化 Podcast，已上架幾集"
+        },
+        {
+            "type": "input",
+            "id": "goal",
+            "label": "🎯 我想了解聽眾的",
+            "placeholder": "例：喜歡什麼、收聽習慣、想聽的未來主題"
+        },
+        {
+            "type": "input",
+            "id": "channel",
+            "label": "📱 我會在哪拋互動",
+            "placeholder": "例：IG 限動、節目結尾、社群貼文"
+        },
+        {
+            "type": "textarea",
+            "id": "expectation",
+            "label": "🎯 期望產出（可不動）",
+            "value": "請幫我設計兩種東西：①5 個適合放在 IG 限動或節目結尾的「輕互動問題」（聽眾一句話就能回、能引導他們分享自己的客家記憶）②一份 5–7 題的聽眾回饋問卷（含題目與選項建議），用來了解收聽習慣、最喜歡的單集類型、希望未來聽到的主題。口吻親切，不要像市調。"
+        }
     ]
 }
 ---PROMPT---
-請根據以下「角色、情境、期望」三要素，產出專業且可直接使用的內容。
+請根據以下資訊，產出專業且可直接使用的內容。
 
 【角色】
 <<<{role}>>>
 
-【情境】
-<<<{context}>>>
+【我的節目】
+- 節目：<<<{show}>>>
+- 我想了解聽眾的：<<<{goal}>>>
+- 我會在哪拋互動：<<<{channel}>>>
 
 【期望】
 <<<{expectation}>>>
@@ -687,7 +1178,8 @@
                     el.className = 'form-control prompt-input';
                 }
                 el.id = item.id;
-                el.value = item.placeholder;
+                if (item.value !== undefined) el.value = item.value;
+                if (item.placeholder !== undefined) el.placeholder = item.placeholder;
                 el.addEventListener('input', updatePrompt);
                 div.appendChild(el);
                 c.appendChild(div);
