@@ -5,6 +5,18 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>客家 Podcast AI 提示詞產生器｜阿峰老師</title>
 <meta name="description" content="15 個客家 Podcast 實戰提示詞，依產製階段分 4 類（策劃、腳本、包裝、經營推廣），選情境、填節目資訊、一鍵複製貼到 Gemini。為「客聲獎 · 未來客聲主題講堂」打造。">
+<!-- OG / Twitter 分享卡（阿峰老師 AI 工具生態系） -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="阿峰老師 AI 工具箱">
+<meta property="og:title" content="客家 Podcast AI 提示詞產生器（15 題・4 類）｜阿峰老師（AI峰哥）">
+<meta property="og:description" content="15 個客家 Podcast 實戰提示詞，分 4 類（策劃、腳本、包裝、經營推廣），選情境、填節目資訊、一鍵複製貼到 AI。阿峰老師（AI峰哥）企業 AI 實戰培訓製作。">
+<meta property="og:url" content="https://huangchingfeng.github.io/hakka-podcast-ai-course/">
+<meta property="og:image" content="https://huangchingfeng.github.io/hakka-podcast-ai-course/afeng.jpg">
+<meta property="og:locale" content="zh_TW">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="客家 Podcast AI 提示詞產生器（15 題・4 類）｜阿峰老師">
+<meta name="twitter:description" content="15 個客家 Podcast 實戰提示詞，選情境、填資訊、一鍵複製貼到 AI。阿峰老師企業 AI 實戰培訓製作。">
+<meta name="twitter:image" content="https://huangchingfeng.github.io/hakka-podcast-ai-course/afeng.jpg">
 <meta name="theme-color" content="#7c3aed">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b6bcb'/%3E%3Cpath d='M20 22h24v6H20zM20 34h24v6H20z' fill='white'/%3E%3C/svg%3E">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b6bcb'/%3E%3Cpath d='M20 22h24v6H20zM20 34h24v6H20z' fill='white'/%3E%3C/svg%3E">
@@ -14,7 +26,8 @@
 *{box-sizing:border-box}html{scroll-behavior:smooth}
 body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter','Noto Sans TC',system-ui,-apple-system,'Segoe UI',sans-serif;line-height:1.6}
 .wrap{width:min(780px,calc(100% - 28px));margin:0 auto}
-header.nav{background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;backdrop-filter:blur(12px)}
+header.nav{background:rgba(255,255,255,.96);border-bottom:1px solid var(--line);position:sticky;top:57px;z-index:20;backdrop-filter:blur(12px)}
+@media(max-width:760px){header.nav{top:55px}}
 .nav-in{display:flex;align-items:center;justify-content:space-between;min-height:60px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--ink);text-decoration:none}
 .brand .mk{width:36px;height:36px;border-radius:9px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.2rem}
@@ -128,6 +141,101 @@ footer a{color:var(--accent);font-weight:800;text-decoration:none}
 </style>
 </head>
 <body>
+<!-- ============================================================
+  阿峰老師 AI 工具生態系・跨工具導覽列（兄弟工具列）v-FINAL
+============================================================ -->
+<style>
+.afeng-eco-bar{position:sticky;top:0;left:0;width:100%;z-index:99990;box-sizing:border-box;
+  --eco-accent:#7c3aed;
+  background:#0A1628;color:#fff;
+  font-family:'Inter','Noto Sans TC',system-ui,-apple-system,"PingFang TC",sans-serif;
+  border-bottom:1px solid rgba(0,212,255,.30);box-shadow:0 2px 12px rgba(0,0,0,.35);
+  -webkit-font-smoothing:antialiased;font-size:14px;line-height:1.4}
+.afeng-eco-bar *{box-sizing:border-box}
+.afeng-eco-bar .ae-inner{display:flex;align-items:center;gap:12px;
+  max-width:1180px;margin:0 auto;padding:8px 14px}
+.afeng-eco-bar .ae-brand{display:flex;align-items:center;gap:7px;flex:0 0 auto;
+  font-weight:900;color:#fff;text-decoration:none;white-space:nowrap;padding-right:2px}
+.afeng-eco-bar .ae-brand .ae-dot{width:9px;height:9px;border-radius:50%;
+  background:#00D4FF;box-shadow:0 0 8px #00D4FF;flex:0 0 auto}
+.afeng-eco-bar .ae-brand small{display:block;font-weight:700;font-size:10px;
+  color:#8FA3BF;letter-spacing:.3px}
+.afeng-eco-bar .ae-scrollwrap{flex:1 1 auto;position:relative;min-width:0;display:flex;align-items:center}
+.afeng-eco-bar .ae-scroll{flex:1 1 auto;display:flex;gap:8px;align-items:center;
+  overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;
+  -webkit-overflow-scrolling:touch;scroll-snap-type:x proximity;padding:1px 2px}
+.afeng-eco-bar .ae-scroll::-webkit-scrollbar{display:none}
+.afeng-eco-bar .ae-item{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto;
+  scroll-snap-align:start;text-decoration:none;white-space:nowrap;
+  color:#C7D2E0;font-weight:700;font-size:13.5px;
+  padding:7px 12px;min-height:38px;border-radius:999px;
+  border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.04);
+  transition:background .15s,color .15s,border-color .15s}
+.afeng-eco-bar .ae-item .ae-emo{font-size:15px;line-height:1}
+.afeng-eco-bar .ae-item:hover{color:#fff;border-color:rgba(0,212,255,.55);
+  background:rgba(0,212,255,.10)}
+.afeng-eco-bar .ae-item.ae-active,
+.afeng-eco-bar[data-active="prompt-generator"] a[data-key="prompt-generator"],
+.afeng-eco-bar[data-active="export-sales-ai"] a[data-key="export-sales-ai"],
+.afeng-eco-bar[data-active="insurance-sales-ai"] a[data-key="insurance-sales-ai"],
+.afeng-eco-bar[data-active="hakka-podcast-ai-course"] a[data-key="hakka-podcast-ai-course"],
+.afeng-eco-bar[data-active="insurance-image-prompts"] a[data-key="insurance-image-prompts"]{
+  color:#0A1628;background:var(--eco-accent,#00D4FF);
+  border-color:var(--eco-accent,#00D4FF);font-weight:900;
+  box-shadow:0 0 10px rgba(0,212,255,.40);cursor:default}
+/* 右緣漸層：手機暗示「右邊還有工具可滑」，直接服務「順手發現其他工具」 */
+.afeng-eco-bar .ae-fade{position:absolute;top:0;right:0;width:34px;height:100%;
+  pointer-events:none;
+  background:linear-gradient(90deg,rgba(10,22,40,0),#0A1628 86%)}
+.afeng-eco-bar .ae-actions{flex:0 0 auto;display:flex;align-items:center;gap:7px}
+.afeng-eco-bar .ae-cta{display:inline-flex;align-items:center;gap:5px;
+  text-decoration:none;font-weight:900;font-size:13px;white-space:nowrap;
+  color:#0A1628;background:#FF6B35;padding:8px 13px;min-height:38px;border-radius:999px;
+  box-shadow:0 0 10px rgba(255,107,53,.35)}
+.afeng-eco-bar .ae-cta:hover{filter:brightness(1.08)}
+.afeng-eco-bar .ae-line{display:inline-flex;align-items:center;gap:5px;
+  text-decoration:none;font-weight:800;font-size:13px;white-space:nowrap;
+  color:#fff;background:rgba(6,199,85,.92);padding:8px 12px;min-height:38px;border-radius:999px}
+.afeng-eco-bar .ae-line:hover{filter:brightness(1.08)}
+@media(max-width:760px){
+  .afeng-eco-bar .ae-inner{gap:8px;padding:7px 10px}
+  .afeng-eco-bar .ae-brand small{display:none}
+  .afeng-eco-bar .ae-cta{padding:8px 11px}
+  .afeng-eco-bar .ae-cta span.ae-cta-long{display:none}
+  /* 手機保留高意圖「聊內訓」橘鈕；LINE 社群文字收起、仍可點 */
+  .afeng-eco-bar .ae-line span.ae-line-long{display:none}
+}
+</style>
+<nav class="afeng-eco-bar" data-active="hakka-podcast-ai-course" aria-label="阿峰老師 AI 工具生態系導覽">
+  <div class="ae-inner">
+    <a class="ae-brand" href="https://www.autolab.cloud" target="_blank" rel="noopener">
+      <span class="ae-dot" aria-hidden="true"></span><span>阿峰老師 AI 工具箱<small>AI峰哥・企業 AI 實戰培訓</small></span>
+    </a>
+    <div class="ae-scrollwrap">
+      <div class="ae-scroll" id="aeScroll">
+        <a class="ae-item" data-key="prompt-generator" href="https://huangchingfeng.github.io/prompt-generator/?ref=ecobar&from=hakka-podcast-ai-course" title="1087 題・產業/部門雙軸"><span class="ae-emo" aria-hidden="true">🧰</span>AI 提示詞產生器（主站）</a>
+        <a class="ae-item" data-key="export-sales-ai" href="https://huangchingfeng.github.io/export-sales-ai/?ref=ecobar&from=hakka-podcast-ai-course" title="306 題・18 類"><span class="ae-emo" aria-hidden="true">🌐</span>B2B 外銷業務 AI</a>
+        <a class="ae-item" data-key="insurance-sales-ai" href="https://huangchingfeng.github.io/insurance-sales-ai/?ref=ecobar&from=hakka-podcast-ai-course" title="306 題・20 類"><span class="ae-emo" aria-hidden="true">🛡️</span>保險業務 AI</a>
+        <a class="ae-item" data-key="hakka-podcast-ai-course" href="https://huangchingfeng.github.io/hakka-podcast-ai-course/?ref=ecobar&from=hakka-podcast-ai-course" title="15 題・4 類"><span class="ae-emo" aria-hidden="true">🎙️</span>客家 Podcast AI</a>
+        <a class="ae-item" data-key="insurance-image-prompts" href="https://huangchingfeng.github.io/insurance-image-prompts/?ref=ecobar&from=hakka-podcast-ai-course" title="16 圖・7 類"><span class="ae-emo" aria-hidden="true">🎨</span>保險做圖提示詞庫</a>
+      </div>
+      <span class="ae-fade" aria-hidden="true"></span>
+    </div>
+    <div class="ae-actions">
+      <a class="ae-cta" href="mailto:ai@autolab.cloud?subject=想聊聊企業 AI 實戰內訓&body=阿峰老師您好，我從您的 AI 工具看到這裡，想了解團隊／單位的 AI 內訓。" title="跟阿峰老師聊企業 AI 內訓">💼 聊內訓<span class="ae-cta-long">（企業/團隊）</span></a>
+      <a class="ae-line" href="https://line.me/ti/g2/o6oRaGIHTzZ1nEofxnT9Rbv7_ZHAX-rylbJfKA?utm_source=ecobar&utm_medium=link&utm_campaign=tool_network&utm_content=hakka-podcast-ai-course" target="_blank" rel="noopener" title="阿峰老師 AI 教學／實戰社群（學 AI 用，非商品諮詢）">💬 LINE<span class="ae-line-long"> 學習社群</span></a>
+    </div>
+  </div>
+  <script>
+  /* 8 行 scoped inline：載入時把 active 工具滑進可視區，命中「認得這是哪個工具」。
+     僅作用於本 nav、try/catch 包覆、不碰宿主、無全域副作用。 */
+  (function(){try{var b=document.currentScript.closest('.afeng-eco-bar');
+    var k=b&&b.getAttribute('data-active');var a=b&&b.querySelector('a[data-key="'+k+'"]');
+    if(a&&a.scrollIntoView){a.scrollIntoView({block:'nearest',inline:'center'});}
+  }catch(e){}})();
+  </script>
+</nav>
+
 <div class="a2hs" id="a2hs"><span>📲 把這個工具加到手機主畫面，下次一秒打開（按瀏覽器「分享」→「加入主畫面」）</span><button id="a2hsX" aria-label="關閉">✕</button></div>
 <header class="nav"><div class="wrap nav-in">
 <a class="brand" href="#top"><span class="mk">🎙️</span><span>客家 Podcast AI<small>AI 提示詞工具｜阿峰老師</small></span></a>
